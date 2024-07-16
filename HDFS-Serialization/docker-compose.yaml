@@ -12,7 +12,7 @@ services:
    datanode:
       image: apache/hadoop:3.3.6
       command: ["hdfs", "datanode"]
-      deploy: # Con esto le indicamos que queremos un factor de replicación de 3 en los DataNodes
+      deploy: # Con esto le indicamos que queremos tener 3 DataNodes
         mode: replicated
         replicas: 3
       env_file:
@@ -32,7 +32,7 @@ services:
       command: ["yarn", "nodemanager"]
       env_file:
         - ./config
-   edge_client: # En esta máquina no crremos ningún proceso de HDFS, solo dejamos la configuración para que llegue al cluster
+   edge_client: # En esta máquina no corremos ningún proceso de HDFS, pero le pasamos configuración para que pueda llegar al cluster
       image: apache/hadoop:3.3.6
       container_name: cliente_linux
       command: ["tail", "-f", "/dev/null"]  # Para que no se cierre por no tener nada que hacer
