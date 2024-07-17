@@ -33,11 +33,17 @@ services:
       command: ["yarn", "nodemanager"]
       env_file:
         - ./config
-   edge_client: # En esta máquina no corremos ningún proceso de HDFS, pero le pasamos configuración para que pueda llegar al cluster
-      image: apache/hadoop:3.3.6
-      container_name: cliente_linux
+   edgenode: # En esta máquina no corremos ningún proceso de HDFS, pero le pasamos configuración para que pueda llegar al cluster
+      build: 
+         context: .
+         dockerfile: Dockerfile_EdgeNode
       command: ["tail", "-f", "/dev/null"]  # Para que no se cierre por no tener nada que hacer
-      env_file:
-        - ./config
       volumes: # De esta forma podremos compartir archivos con nuestro cliente dockerizado
         - ./archivos:/tmp
+   cliente:
+      build: 
+         context: .
+         dockerfile: Dockerfile_Cliente
+      command: ["tail", "-f", "/dev/null"]
+      env_file:
+        - ./config     
