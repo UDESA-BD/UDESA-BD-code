@@ -4,7 +4,8 @@ services:
       hostname: namenode
       command: ["hdfs", "namenode"]
       ports:
-        - 9870:9870
+        - 9870:9870 # Interfaz web del NameNode, para ver el estado
+        - 8020:8020 # Puerto de la WebHDFS REST API (cuidado con la seguridad!)
       env_file:
         - ./config
       environment:
