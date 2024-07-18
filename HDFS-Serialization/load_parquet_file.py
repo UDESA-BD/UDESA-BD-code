@@ -3,8 +3,6 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 from pyarrow import fs
 
-
-
 df = pd.read_csv('/tmp/trips_2024.csv', names=['id_recorrido', 'duracion_recorrido', 'fecha_origen_recorrido',
 'id_estacion_origen', 'nombre_estacion_origen', 'direccion_estacion_origen', 
 'long_estacion_origen', 'lat_estacion_origen', 'fecha_destino_recorrido', 'id_estacion_destino', 'nombre_estacion_destino', 'direccion_estacion_destino', 'long_estacion_destino', 'lat_estacion_destino', 'id_usuario', 'modelo_bicicleta', 'genero'])
@@ -17,5 +15,6 @@ pq.write_to_dataset(
     tabla_pyarrow,
     filesystem=mi_hdfs,
     root_path='/',
-    basename_template="bicis{i}.parquet"
+    basename_template="bicis{i}.parquet",
+    partitioning=["genero"]
 )
