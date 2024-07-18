@@ -9,10 +9,10 @@ services:
         - ./config
       environment:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
-   datanode:
+   datanode: # Atención: Los volumenes de los DataNodes y del NameNode no están mapeados, por lo que los datos se perderán al reiniciar
       image: apache/hadoop:3.3.6
       command: ["hdfs", "datanode"]
-      deploy: # Con esto le indicamos que queremos tener 3 DataNodes
+      deploy: # Con esto le indicamos que queremos tener 3 DataNodes, y así levantará 3 containers distintos para ellos
         mode: replicated
         replicas: 3
       env_file:
@@ -32,12 +32,14 @@ services:
       command: ["yarn", "nodemanager"]
       env_file:
         - ./config
-   edgenode: # En esta máquina no corremos ningún proceso de HDFS, pero le pasamos configuración para que pueda llegar al cluster
+   edgenode: # Este container tiene un Ubuntu 22.04 con Python/Pandas/PyArrow para hacer experimentos. No corre ningún proceso del HDFS, pero tenemos las bibliotecas de Hadoop y la configuración para que se pueda llegar al cluster
       build: 
          context: .
          dockerfile: Dockerfile_EdgeNode
          platforms:
            - linux/amd64
       command: ["tail", "-f", "/dev/null"]
+      cap_add:
+        - NET_ADMIN # Para poder usar iotop
       volumes:
         - ./archivos:/tmp
