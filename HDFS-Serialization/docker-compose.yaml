@@ -5,7 +5,6 @@ services:
       command: ["hdfs", "namenode"]
       ports:
         - 9870:9870 # Interfaz web del NameNode, para ver el estado
-        - 8020:8020 # Puerto de la WebHDFS REST API (cuidado con la seguridad!)
       env_file:
         - ./config
       environment:
@@ -37,13 +36,8 @@ services:
       build: 
          context: .
          dockerfile: Dockerfile_EdgeNode
-      command: ["tail", "-f", "/dev/null"]  # Para que no se cierre por no tener nada que hacer
-      volumes: # De esta forma podremos compartir archivos con nuestro cliente dockerizado
-        - ./archivos:/tmp
-   cliente:
-      build: 
-         context: .
-         dockerfile: Dockerfile_Cliente
+         platforms:
+           - linux/amd64
       command: ["tail", "-f", "/dev/null"]
-      env_file:
-        - ./config     
+      volumes:
+        - ./archivos:/tmp
