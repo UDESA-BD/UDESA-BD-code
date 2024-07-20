@@ -57,18 +57,20 @@ ENV ARROW_LIBHDFS_DIR="/hadoop-3.3.6/lib/native/"
 # Variable de entorno necesaria para que corran los comandos 'hdfs dfs ...' en el EdgeNode
 ENV PATH="$PATH:/hadoop-3.3.6/bin"
 
-#ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/hadoop-3.3.6/lib/native"
-#ENV SPARK_DIR="/home/hadoop/.local/lib/python3.10/site-packages/pyspark"
-#ENV HADOOP_CONF_DIR="/hadoop-3.3.6/etc/hadoop/"
-#ENV YARN_CONF_DIR="/hadoop-3.3.6/etc/hadoop/"
-#RUN echo ' \
-#<configuration> \
-#    <property><name>yarn.resourcemanager.hostname</name><value>resourcemanager</value></property> \
-#    <property><name>yarn.nodemanager.aux-services</name><value>mapreduce_shuffle</value></property> \
-#    <property><name>yarn.nodemanager.vmem-check-enabled</name><value>false</value></property> \
-#    <property><name>yarn.nodemanager.pmem-check-enabled</name><value>false</value></property> \
-#    <property><name>yarn.nodemanager.delete.debug-delay-sec</name><value>600</value></property> \
-#</configuration>' > /hadoop-3.3.6/etc/hadoop/yarn-site.xml
+# Variables y paquetes para correr Spark en el EdgeNode
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/hadoop-3.3.6/lib/native"
+ENV SPARK_HOME="/home/hadoop/.local/lib/python3.10/site-packages/pyspark"
+ENV HADOOP_CONF_DIR="/hadoop-3.3.6/etc/hadoop/"
+ENV YARN_CONF_DIR="/hadoop-3.3.6/etc/hadoop/"
+RUN echo ' \
+<configuration> \
+   <property><name>yarn.resourcemanager.hostname</name><value>resourcemanager</value></property> \
+   <property><name>yarn.nodemanager.aux-services</name><value>mapreduce_shuffle</value></property> \
+   <property><name>yarn.nodemanager.vmem-check-enabled</name><value>false</value></property> \
+   <property><name>yarn.nodemanager.pmem-check-enabled</name><value>false</value></property> \
+   <property><name>yarn.nodemanager.delete.debug-delay-sec</name><value>600</value></property> \
+</configuration>' > /hadoop-3.3.6/etc/hadoop/yarn-site.xml
+RUN pip install pyspark
 
 # Permisos y usuarios
 RUN apt -y install sudo iotop
