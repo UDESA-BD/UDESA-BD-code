@@ -1,7 +1,0 @@
-FROM apache/spark:3.5.1-scala2.12-java17-python3-r-ubuntu
-
-# Instalamos pyspark
-RUN apt update
-USER root
-RUN pip install pyspark
-USER spark
