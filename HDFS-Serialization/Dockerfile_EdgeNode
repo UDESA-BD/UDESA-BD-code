@@ -73,6 +73,6 @@ ENV PATH="$PATH:/hadoop-3.3.6/bin"
 # Permisos y usuarios
 RUN apt -y install sudo iotop
 RUN usermod -a -G sudo hadoop
-chmod 777 /tmp
+RUN chmod 777 /tmp
 USER hadoop
 
