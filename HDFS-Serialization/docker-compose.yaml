@@ -1,63 +1,66 @@
 services:
-   namenode:
-      image: apache/hadoop:3.3.6
-      hostname: namenode
-      command: ["hdfs", "namenode"]
-      networks:
-        - bd-udesa
-      ports:
-        - 9870:9870 # Interfaz web del NameNode, para ver el estado
-      env_file:
-        - ./config
-      environment:
-          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
-   datanode: # Atención: Los volumenes de los DataNodes y del NameNode no están mapeados, por lo que los datos se perderán al reiniciar
-      image: apache/hadoop:3.3.6
-      command: ["hdfs", "datanode"]
-      networks:
-        - bd-udesa
-      deploy: # Con esto le indicamos que queremos tener 3 DataNodes, y así levantará 3 containers distintos para ellos
-        mode: replicated
-        replicas: 3
-      cap_add:
-        - NET_ADMIN # Para poder usar iotop
-      env_file:
-        - ./config      
-   resourcemanager:
-      image: apache/hadoop:3.3.6
-      hostname: resourcemanager
-      command: ["yarn", "resourcemanager"]
-      networks:
-        - bd-udesa
-      ports:
-         - 8088:8088
-      env_file:
-        - ./config
-      volumes:
-        - ./test.sh:/opt/test.sh
-   nodemanager:
-      image: apache/hadoop:3.3.6
-      networks:
-        - bd-udesa
-      command: ["yarn", "nodemanager"]
-      env_file:
-        - ./config
-   edgenode: # Este container tiene un Ubuntu 22.04 con Python/Pandas/PyArrow para hacer experimentos. No corre ningún proceso del HDFS, pero tenemos las bibliotecas de Hadoop y la configuración para que se pueda llegar al cluster
-      build: 
-         context: .
-         dockerfile: Dockerfile_EdgeNode
-         platforms:
-           - linux/amd64
-      networks:
-        - bd-udesa
-      command: ["tail", "-f", "/dev/null"]
-      cap_add:
-        - NET_ADMIN # Para poder usar iotop
-      volumes:
-        - ./archivos:/tmp
+  namenode:
+    image: apache/hadoop:3.3.6
+    hostname: namenode
+    command: [ "hdfs", "namenode" ]
+    networks:
+      - bd-udesa
+    ports:
+      - 9870:9870 # Interfaz web del NameNode, para ver el estado
+    env_file:
+      - ./config
+    environment:
+      ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+  datanode:
+    # Atención: Los volumenes de los DataNodes y del NameNode no están mapeados, por lo que los datos se perderán al reiniciar
+    image: apache/hadoop:3.3.6
+    command: [ "hdfs", "datanode" ]
+    networks:
+      - bd-udesa
+    deploy:
+      # Con esto le indicamos que queremos tener 3 DataNodes, y así levantará 3 containers distintos para ellos
+      mode: replicated
+      replicas: 3
+    cap_add:
+      - NET_ADMIN # Para poder usar iotop
+    env_file:
+      - ./config
+  resourcemanager:
+    image: apache/hadoop:3.3.6
+    hostname: resourcemanager
+    command: [ "yarn", "resourcemanager" ]
+    networks:
+      - bd-udesa
+    ports:
+      - 8088:8088
+    env_file:
+      - ./config
+    volumes:
+      - ./test.sh:/opt/test.sh
+  nodemanager:
+    image: apache/hadoop:3.3.6
+    networks:
+      - bd-udesa
+    command: [ "yarn", "nodemanager" ]
+    env_file:
+      - ./config
+  edgenode:
+    # Este container tiene un Ubuntu 22.04 con Python/Pandas/PyArrow para hacer experimentos. No corre ningún proceso del HDFS, pero tenemos las bibliotecas de Hadoop y la configuración para que se pueda llegar al cluster
+    build:
+      context: .
+      dockerfile: Dockerfile_EdgeNode
+      platforms:
+        - linux/amd64
+    networks:
+      - bd-udesa
+    command: [ "tail", "-f", "/dev/null" ]
+    cap_add:
+      - NET_ADMIN # Para poder usar iotop
+    volumes:
+      - ./archivos:/tmp
 networks:
   bd-udesa:
     ipam:
       driver: default
       config:
-        - subnet: "172.18.0.0/24"
+        - subnet: "172.20.0.0/24"
