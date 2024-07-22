@@ -13,6 +13,8 @@ df = pd.read_csv('/tmp/trips_2024.csv', names=['id_recorrido', 'duracion_recorri
 df['duracion_recorrido'] = df['duracion_recorrido'].str.replace(',', '')
 df.astype({'duracion_recorrido': 'float'})
 
+df.to_csv('/tmp/trips_2024_corregido.csv', sep=';', header=False, index=False)
+
 # Lo cargamos en memoria con PyArrow
 tabla_pyarrow = pa.Table.from_pandas(df)
 

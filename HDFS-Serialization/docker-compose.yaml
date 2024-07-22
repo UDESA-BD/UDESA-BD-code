@@ -53,6 +53,8 @@ services:
         - linux/amd64
     networks:
       - bd-udesa
+    ports:
+      - 4040:4040 # Interfaz web de Spark (disponible si existe un SparkContext)
     command: [ "tail", "-f", "/dev/null" ]
     cap_add:
       - NET_ADMIN # Para poder usar iotop
