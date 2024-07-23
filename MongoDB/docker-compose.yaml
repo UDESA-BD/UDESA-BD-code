@@ -1,0 +1,11 @@
+services:
+  mongo:
+    image: mongo:7.0.12
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: bd_udesa
+      MONGO_INITDB_ROOT_PASSWORD: bd_udesa
+    ports:
+      - 27017:27017 # Puerto del servidor mongod
+    volumes:
+      - ./mongodb_data:/data # Para no perder las bases de datos cargadas al reiniciar el container
+      - ./archivos:/archivos # Para poder copiar entre nuestra máquina
