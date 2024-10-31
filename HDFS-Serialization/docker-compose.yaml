@@ -14,6 +14,7 @@ services:
       CORE-SITE.XML_fs.defaultFS: hdfs://namenode
       HDFS-SITE.XML_dfs.namenode.rpc-address: namenode:8020
       HDFS-SITE.XML_dfs.replication: 2
+      HDFS-SITE.XML_dfs.namenode.heartbeat.recheck-interval: 10000
       MAPRED-SITE.XML_mapreduce.framework.name: "yarn"
       MAPRED-SITE.XML_yarn.app.mapreduce.am.env: "HADOOP_MAPRED_HOME=$HADOOP_HOME"
       MAPRED-SITE.XML_mapreduce.map.env: "HADOOP_MAPRED_HOME=$HADOOP_HOME"
@@ -56,6 +57,7 @@ services:
       CORE-SITE.XML_fs.defaultFS: hdfs://namenode
       HDFS-SITE.XML_dfs.namenode.rpc-address: namenode:8020
       HDFS-SITE.XML_dfs.replication: 2
+      HDFS-SITE.XML_dfs.namenode.heartbeat.recheck-interval: 10000
       MAPRED-SITE.XML_mapreduce.framework.name: "yarn"
       MAPRED-SITE.XML_yarn.app.mapreduce.am.env: "HADOOP_MAPRED_HOME=$HADOOP_HOME"
       MAPRED-SITE.XML_mapreduce.map.env: "HADOOP_MAPRED_HOME=$HADOOP_HOME"
@@ -93,6 +95,7 @@ services:
       CORE-SITE.XML_fs.defaultFS: hdfs://namenode
       HDFS-SITE.XML_dfs.namenode.rpc-address: namenode:8020
       HDFS-SITE.XML_dfs.replication: 2
+      HDFS-SITE.XML_dfs.namenode.heartbeat.recheck-interval: 10000
       MAPRED-SITE.XML_mapreduce.framework.name: "yarn"
       MAPRED-SITE.XML_yarn.app.mapreduce.am.env: "HADOOP_MAPRED_HOME=$HADOOP_HOME"
       MAPRED-SITE.XML_mapreduce.map.env: "HADOOP_MAPRED_HOME=$HADOOP_HOME"
@@ -129,6 +132,7 @@ services:
       CORE-SITE.XML_fs.defaultFS: hdfs://namenode
       HDFS-SITE.XML_dfs.namenode.rpc-address: namenode:8020
       HDFS-SITE.XML_dfs.replication: 2
+      HDFS-SITE.XML_dfs.namenode.heartbeat.recheck-interval: 10000
       MAPRED-SITE.XML_mapreduce.framework.name: "yarn"
       MAPRED-SITE.XML_yarn.app.mapreduce.am.env: "HADOOP_MAPRED_HOME=$HADOOP_HOME"
       MAPRED-SITE.XML_mapreduce.map.env: "HADOOP_MAPRED_HOME=$HADOOP_HOME"
