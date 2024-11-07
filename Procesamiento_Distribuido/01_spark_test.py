@@ -7,7 +7,7 @@ from pyspark import SparkContext, SparkConf
 sc = SparkContext('local', 'test')
 
 # Nos conectamos al cluster HDFS
-archivo = sc.textFile("hdfs://namenode:8020/recorridos_realizados_2024.csv")
+archivo = sc.textFile("hdfs://namenode:8020/recorridos_realizados_2024_corregido.csv")
 #################################################
 
 

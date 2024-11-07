@@ -38,6 +38,12 @@ services:
       CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.queue-mappings: ""
       CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.queue-mappings-override.enable: false
       ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://namenode:9870/jmx?qry=Hadoop:service=NameNode,name=NameNodeStatus|grep -q 'active'"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
   datanode:
     # Atención: Los volumenes de los DataNodes y del NameNode no están mapeados, por lo que los datos se perderán al reiniciar
     image: apache/hadoop:3.3.6
@@ -48,6 +54,9 @@ services:
       # Con esto le indicamos que queremos tener 3 DataNodes, y así levantará 3 containers distintos para ellos
       mode: replicated
       replicas: 3
+    depends_on:
+      namenode: #Para asegurar que el namenode se levante antes que los datanodes
+        condition: service_healthy
     cap_add:
       - NET_ADMIN # Para poder usar iotop
     env_file:
