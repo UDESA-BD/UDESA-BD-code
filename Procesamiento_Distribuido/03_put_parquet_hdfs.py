@@ -3,6 +3,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 from pyarrow import fs
 from pyarrow import dataset
+import re
 
 # Leemos el .csv a un DataFrame de Pandas
 df = pd.read_csv('/tmp/recorridos_realizados_2024.csv', names=['id_recorrido', 'duracion_recorrido', 'fecha_origen_recorrido',
