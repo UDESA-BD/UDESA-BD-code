@@ -6,7 +6,7 @@ spark = SparkSession.builder.master('local') \
     .getOrCreate()
 
 # Extraemos el esquema
-esquema = spark.read.parquet("hdfs://namenode:8020/bicis/2024-01-01/bicis0.parquet").schema
+esquema = spark.read.parquet("hdfs://namenode:8020/bicis/1/bicis0.parquet").schema
 
 # Nos conectamos al dataset
 df = spark.read.load("hdfs://namenode:8020/bicis/*", format='parquet', schema=esquema)
