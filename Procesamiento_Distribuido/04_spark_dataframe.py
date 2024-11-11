@@ -1,6 +1,5 @@
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SparkSession, functions
-from pyspark.sql import functions
 
 spark = SparkSession.builder.master('local') \
     .appName('test') \
