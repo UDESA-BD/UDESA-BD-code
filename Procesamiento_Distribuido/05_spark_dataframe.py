@@ -12,5 +12,5 @@ esquema = spark.read.parquet("/tmp/bicis/1/bicis0.parquet").schema
 df = spark.read.option("recursiveFileLookup","true").load("/tmp/bicis/", format='parquet', schema=esquema)
 
 # Utilizamos Spark SQL, que nos brinda un DataFrame con dos formas de realizar consultas:
-# - Utilizando SQL: https://spark.apache.org/docs/3.5.2/sql-getting-started.html#running-sql-queries-programmatically
+# - Utilizando SQL: https://spark.apache.org/docs/latest/sql-getting-started.html#running-sql-queries-programmatically
 # - Utilizando métodos propios de DataFrames: https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/dataframe.html
