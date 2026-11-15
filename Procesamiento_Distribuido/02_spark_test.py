@@ -4,7 +4,7 @@ from pyspark import SparkContext, SparkConf
 sc = SparkContext('local', 'test')
 
 # Abrimos el archivo
-archivo = sc.textFile("/tmp/recorridos_realizados_2024_corregido.csv")
+archivo = sc.textFile("/tmp/recorridos_realizados_2026_corregido.csv")
 
 # Ejecutamos la tarea, en este caso contar la cantidad de líneas del archivo
 archivo.count()
